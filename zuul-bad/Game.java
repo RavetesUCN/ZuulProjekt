@@ -19,6 +19,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private int bomb;
         
     /**
      * Create the game and initialise its internal map.
@@ -34,7 +35,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room outside, theater, pub, lab, office, bomb_trollroom;
       
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -42,13 +43,15 @@ public class Game
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        bomb_trollroom = new Room("still, sweat dripping from ur orphusis, there is a fucking bomb in this room :(");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
+        outside.setExits(bomb_trollroom, theater, lab, pub);
         theater.setExits(null, null, null, outside);
         pub.setExits(null, outside, null, null);
         lab.setExits(outside, office, null, null);
         office.setExits(null, null, null, lab);
+        bomb_trollroom.setExits(null, null, null, null);
 
         currentRoom = outside;  // start game outside
     }
@@ -172,7 +175,7 @@ public class Game
         }
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
+            System.out.println("There is no door! there is no hope!");
         }
         else {
             currentRoom = nextRoom;
