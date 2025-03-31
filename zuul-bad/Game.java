@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -20,7 +22,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private int bomb;
-        
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -36,7 +38,7 @@ public class Game
     private void createRooms()
     {
         Room outside, theater, pub, lab, office, bomb_trollroom;
-      
+
         // create the rooms
         outside = new Room("outside the main entrance of the university");
         theater = new Room("in a lecture theater");
@@ -44,14 +46,14 @@ public class Game
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
         bomb_trollroom = new Room("still, sweat dripping from ur orphusis, there is a fucking bomb in this room :(");
-        
+
         // initialise room exits
-        outside.setExits(bomb_trollroom, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
-        bomb_trollroom.setExits(null, null, null, null);
+        outside.setExits(null, theater, lab, pub, null);
+        theater.setExits(null, null, null, outside, null);
+        pub.setExits(null, outside, null, null, null);
+        lab.setExits(outside, office, null, null, null);
+        office.setExits(null, null, null, lab, bomb_trollroom);
+        bomb_trollroom.setExits(null, null, null, null, null);
 
         currentRoom = outside;  // start game outside
     }
@@ -65,7 +67,7 @@ public class Game
 
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
-                
+
         boolean finished = false;
         while (! finished) {
             Command command = parser.getCommand();
@@ -97,6 +99,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.cellerExit != null) {
+            System.out.print("celler ");
         }
         System.out.println();
     }
@@ -158,6 +163,7 @@ public class Game
         }
 
         String direction = command.getSecondWord();
+        int shit = command.rolldatshit();
 
         // Try to leave current room.
         Room nextRoom = null;
@@ -172,6 +178,9 @@ public class Game
         }
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
+        }
+        if(direction.equals("celler")) {
+            nextRoom = currentRoom.cellerExit;
         }
 
         if (nextRoom == null) {
@@ -193,7 +202,24 @@ public class Game
             if(currentRoom.westExit != null) {
                 System.out.print("west ");
             }
+            if(currentRoom.cellerExit != null) {
+                System.out.print("celler ");
+            }
+            if(currentRoom.cellerExit == null) {
+            bomb(shit);
+            }
             System.out.println();
+        }
+    }
+
+    public void bomb(int shit) {
+        Random random = new Random();
+        int r = random.nextInt(1, 11);
+        if (shit != r) {
+            System.out.print("BOOOOM");
+        }
+        else {
+            System.out.print("Counter terrorist win");
         }
     }
 
