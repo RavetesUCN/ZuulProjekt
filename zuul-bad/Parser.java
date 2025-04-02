@@ -19,8 +19,9 @@ import java.util.Scanner;
 public class Parser 
 {
     private CommandWords commands;  // holds all valid command words
-    private Scanner reader;         // source of command input
-
+    private Scanner reader; 
+    private Items items;
+    
     /**
      * Create a parser to read from the terminal window.
      */
@@ -63,4 +64,9 @@ public class Parser
             return new Command(null, word2, word3); 
         }
     }
+    public void showCommands() {
+        commands.showAll();
+    }
+    
+   
 }

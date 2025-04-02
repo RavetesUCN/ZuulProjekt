@@ -1,3 +1,6 @@
+import java.util.HashMap;
+import java.util.Set;
+
 /**
  * Class Room - a room in an adventure game.
  *
@@ -14,57 +17,56 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room cellerExit;
+    private String description;
+    private Room northExit;
+    private Room southExit;
+    private Room eastExit;
+    private Room westExit;
+    private Room cellerExit;
+    
+    private HashMap<String, Room> exits;
 
-    /**
-     * Create a room described "description". Initially, it has
-     * no exits. "description" is something like "a kitchen" or
-     * "an open court yard".
-     * @param description The room's description.
-     */
-    public Room(String description) 
-    {
+    public Room(String description) {
         this.description = description;
+        exits = new HashMap<>();
+    }
+    
+    public Room getExits(String direction) {
+        return exits.get(direction);
+    }
+    
+    public String getExitsString() {
+        String returnString = "Exits: ";
+        Set<String> keys = exits.keySet();
+        for (String exit : keys) {
+            returnString += " " + exit;
+        }
+        
+        return returnString;
     }
 
-    /**
-     * Define the exits of this room.  Every direction either leads
-     * to another room or is null (no exit there).
-     * @param north The north exit.
-     * @param east The east east.
-     * @param south The south exit.
-     * @param west The west exit.
-     */
     public void setExits(Room north, Room east, Room south, Room west, Room celler) 
     {
         if(north != null) {
-            northExit = north;
+            exits.put("north", north);
         }
         if(east != null) {
-            eastExit = east;
+            exits.put("east", east);
         }
         if(south != null) {
-            southExit = south;
+            exits.put("south", south);
         }
         if(west != null) {
-            westExit = west;
+            exits.put("west", west);
         }
         if(celler != null) {
-            cellerExit = celler;
+            exits.put("celler", celler);
         }
     }
-
-    /**
-     * @return The description of the room.
-     */
-    public String getDescription()
-    {
-        return description;
+    
+    public String getLongDescription() {
+        return "you are " + description + ".\n" + getExitsString();
     }
+    
 
 }
