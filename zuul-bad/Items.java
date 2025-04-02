@@ -1,28 +1,17 @@
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Random;
-
 public class Items {
-    private Items sten;  
-    private Items hund;  
+    private String name;
+    private String weight;
 
-    public HashMap<Items, String> weapons;
-
-    public Items () {
-        weapons = new HashMap<>();
+    public Items(String name, String weight) {
+        this.name = name;
+        this.weight = weight;
     }
 
-    private void makeItem(Items items) {
-        weapons.put(sten, "20kg");
-        weapons.put(hund, "-1kg");
+    public String getName() {
+        return name;
     }
 
-    public void getInventory(String key) {
-
+    public String getWeight() {
+        return weight;
     }
-
-    public void useItem() {
-
-    }
-
 }

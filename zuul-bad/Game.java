@@ -40,11 +40,10 @@ public class Game
     private void createRooms()
     {
         Room outside, theater, pub, lab, office, bomb_trollroom;
-
         // create the rooms
         outside = new Room("outside the main entrance of the university");
         theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub, and there is a " + items);
+        pub = new Room("in the campus pub, and there is a ");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
         bomb_trollroom = new Room("still, sweat dripping from ur orphusis, there is a fucking bomb in this room :(");
@@ -56,7 +55,14 @@ public class Game
         lab.setExits(outside, office, null, null, null);
         office.setExits(null, null, null, lab, bomb_trollroom);
         bomb_trollroom.setExits(null, null, null, null, null);
-
+        //set Items
+        outside.setItem(new Items("Sword", "3kg"));
+        pub.setItem(new Items("Beer", "500g"));
+        lab.setItem(new Items("Laptop", "2kg"));
+        office.setItem(new Items("Key", "50g"));
+        bomb_trollroom.setItem(new Items("Detonator", "250g"));
+        //add Items to rooms
+        theater.addItem(new Items("sword", "3kg"));
         currentRoom = outside;  // start game outside
     }
 
@@ -152,7 +158,7 @@ public class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-    
+
     /** 
      * Try to go in one direction. If there is an exit, enter
      * the new room, otherwise print an error message.
@@ -207,7 +213,6 @@ public class Game
                 System.out.print("celler ");
             }
             if(currentRoom.getExits("celler") == null) {
-                bomb(shit);
             }
             System.out.println();
         }
@@ -243,8 +248,8 @@ public class Game
     private void look() {
         System.out.print(currentRoom.getLongDescription()); 
     }
-    
+
     private void useItemNow(Command command) {
-        
+
     }
 }
